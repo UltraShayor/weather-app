@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
 const api = {
-  key: "84009787f1cf535ec560e599e2f3e859",
-  base: "https://api.openweathermap.org/data/2.5/"
+  // Get key from https://openweathermap.org/api
 }
-//shayor
+
 function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
@@ -14,13 +13,9 @@ function App() {
   const search = evt => {
 
 
-// if (evt.key === "Enter") means that the event will only be triggered after pressing enter
     if (evt.key === "Enter") {
 
-      /*
-      the inpuit is saved in quarry in the line onChange={e => {setQuery(e.target.value)}} in the div search-box 
-      then it is sent to the api to retreve the data.
-      */
+
       fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(res => res.json())
         .then(result => {
@@ -28,11 +23,11 @@ function App() {
           setQuery('');
           var temp = result.main.temp
           var t = result.weather.main
-         if(temp>30 ){
-            setColor("hot") 
-          }else if(10 < temp < 30 ){
+          if (temp > 30) {
+            setColor("hot")
+          } else if (10 < temp < 30) {
             setColor("clear")
-          }else if(temp <= 10 ){
+          } else if (temp <= 10) {
             setColor("cold")
           }
           console.log(result);
@@ -56,7 +51,7 @@ function App() {
     <div className={color}>
       <main>
         <div className="search-box">
-          <input 
+          <input
             type="text"
             className="search-bar"
             placeholder="Search..."
@@ -68,35 +63,35 @@ function App() {
           />
         </div>
         {(typeof weather.main != "undefined") ? (
-         <div>
-         <div className="location-box">
-           <div className="location">{weather.name}, {weather.sys.country}</div>
-           <div className="date">{dateBuilder(new Date())}</div>
-         </div>
+          <div>
+            <div className="location-box">
+              <div className="location">{weather.name}, {weather.sys.country}</div>
+              <div className="date">{dateBuilder(new Date())}</div>
+            </div>
 
-         <div className="weather-box">
-            <div className="temp">
-              {Math.round(weather.main.temp)}°c
+            <div className="weather-box">
+              <div className="temp">
+                {Math.round(weather.main.temp)}°c
+              </div>
+              <div className="weather">{weather.weather[0].main}</div>
             </div>
-            <div className="weather">{weather.weather[0].main}</div>
-          </div>
 
-          <div className="add-info">
-            <div className="info-item">
-              Feels Like {Math.round(weather.main.feels_like)}°c
+            <div className="add-info">
+              <div className="info-item">
+                Feels Like {Math.round(weather.main.feels_like)}°c
+              </div>
+              <div className="info-item">
+                Humidity {Math.round(weather.main.humidity)}%
+              </div>
+              <div className="info-item">
+                Air Pressure {Math.round(weather.main.pressure)} hPa
+              </div>
+              <div className="info-item">
+                Wind Speed {(weather.wind.speed)}m/s
+              </div>
+
             </div>
-            <div className="info-item">
-              Humidity {Math.round(weather.main.humidity)}%
-            </div>
-            <div className="info-item">
-              Air Pressure {Math.round(weather.main.pressure)} hPa
-            </div>
-            <div className="info-item">
-              Wind Speed {(weather.wind.speed)}m/s
-            </div>
-      
           </div>
-       </div>
         ) : ('')}
       </main>
     </div>

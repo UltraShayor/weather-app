@@ -4,7 +4,7 @@ const api = {
   key: "84009787f1cf535ec560e599e2f3e859",
   base: "https://api.openweathermap.org/data/2.5/"
 }
-
+//shayor
 function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
